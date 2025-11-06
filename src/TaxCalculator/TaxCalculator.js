@@ -147,7 +147,6 @@ const TaxCalculator = () => {
                 <div className="tc-header">
                     <div>
                         <div className="tc-title"><i className="pi pi-calculator" style={{marginRight:8,color:'#22d3ee'}}></i>Income Tax & Provident Fund</div>
-                        <div className="tc-sub">Modern, clean and accurate — logic unchanged</div>
                     </div>
                     <div className="theme-toggle">
                         <span className="tc-sub">Theme</span>
