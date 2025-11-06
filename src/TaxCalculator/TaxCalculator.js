@@ -107,67 +107,102 @@ const TaxCalculator = () => {
     }
 
     return (
-        <div className="container-fluid p-4">
-            <Row>
-                <Col xs={12} sm={12} md={4} lg={4} >
-                    <InputText
-                        className="w-100"
-                        value={salary}
-                        onChange={(e) => {
-                            setSalary(e.target.value);
-                            setSalaryMsg(false);
-                        }}
-                        placeholder="Enter your salary"
-                    />
-                    { salaryMsg === true ?
-                        <span style={{color: "red"}}>Please enter your salary</span>
-                        : null
-                    }
-                </Col>
-            </Row>
-            <div className='mt-3 mb-3'>
-                <Button className="mybtn me-3" onClick={handleTaxCalculate} disabled={providentFund && salary}>Calculate</Button>
-                <Button className="mybtn" onClick={handleReset}>Reset</Button>
+        <div className="tc-shell">
+            <div className="tc-card">
+                <div className="tc-header">
+                    <div>
+                        <div className="tc-title"><i className="pi pi-calculator" style={{marginRight:8,color:'#22d3ee'}}></i>Income Tax & Provident Fund</div>
+                        <div className="tc-sub">Modern, clean and accurate — logic unchanged</div>
+                    </div>
+                </div>
+
+                <div className="tc-grid">
+                    <Row>
+                        <Col xs={12} sm={12} md={6} lg={6} >
+                            <div className="tc-field">
+                                <label>Monthly Salary</label>
+                                <InputText
+                                    className="w-100"
+                                    value={salary}
+                                    onChange={(e) => {
+                                        setSalary(e.target.value);
+                                        setSalaryMsg(false);
+                                    }}
+                                    placeholder="Enter your salary"
+                                />
+                                { salaryMsg === true ?
+                                    <span className="tc-note" style={{color: "#ef9a9a"}}>Please enter your salary</span>
+                                    : null
+                                }
+                            </div>
+                        </Col>
+                    </Row>
+
+                    <div className='tc-actions'>
+                        <Button className="mybtn" onClick={handleTaxCalculate} disabled={providentFund && salary}><i className="pi pi-equals" style={{marginRight:8}}></i>Calculate</Button>
+                        <Button className="mybtn secondary" onClick={handleReset}><i className="pi pi-refresh" style={{marginRight:8}}></i>Reset</Button>
+                    </div>
+
+                    <div className="tc-hr"></div>
+
+                    <Row>
+                        <Col xs={12} sm={12} md={4} lg={4} >
+                            <div className="tc-field">
+                                <label>Provident Fund Deduction</label>
+                                <InputText
+                                    className="w-100"
+                                    value={providentFund}
+                                    onChange={(e) => {
+                                        setProvidentFund(e.target.value);
+                                    }}
+                                    placeholder="Calculated or enter manually"
+                                />
+                            </div>
+                        </Col>
+                        <Col xs={12} sm={12} md={4} lg={4} >
+                            <div className="tc-field">
+                                <label>Monthly Tax Deduction</label>
+                                <InputText
+                                    className="w-100"
+                                    value={taxMonthlyAmount}
+                                    placeholder="Auto-calculated"
+                                />
+                            </div>
+                        </Col>
+                        <Col xs={12} sm={12} md={4} lg={4} >
+                            <div className="tc-field">
+                                <label>Yearly Tax Deduction</label>
+                                <InputText
+                                    className="w-100"
+                                    value={taxYearlyAmount}
+                                    placeholder="Auto-calculated"
+                                />
+                            </div>
+                        </Col>
+                    </Row>
+
+                    <div className="tc-hr"></div>
+
+                    <Row>
+                        <Col xs={12} sm={12} md={6} lg={6}>
+                            <div className="tc-field">
+                                <label>Salary After Deduction</label>
+                                <InputText
+                                    className="w-100"
+                                    value={salaryAfterDeduction}
+                                    placeholder="Auto-calculated"
+                                />
+                            </div>
+                        </Col>
+                        <Col xs={12} sm={12} md={6} lg={6}>
+                            <div className="tc-stat">
+                                <i className="pi pi-info-circle" style={{color:'#34d399'}}></i>
+                                <span className="tc-note">EOBI fixed at 370. PF and tax calculated per existing slabs.</span>
+                            </div>
+                        </Col>
+                    </Row>
+                </div>
             </div>
-
-            <hr></hr>
-
-            <Row>
-                <Col xs={12} sm={12} md={4} lg={4} >
-                    <label>Provident Fund Deduction</label>
-                    <InputText
-                        className="w-100"
-                        value={providentFund}
-                        onChange={(e) => {
-                            setProvidentFund(e.target.value);
-                        }}
-                    />
-                </Col>
-                <Col xs={12} sm={12} md={4} lg={4} >
-                    <label>Monthly Tax Deduction</label>
-                    <InputText
-                        className="w-100"
-                        value={taxMonthlyAmount}
-                    />
-                </Col>
-                <Col xs={12} sm={12} md={4} lg={4} >
-                    <label>Yearly Tax Deduction</label>
-                    <InputText
-                        className="w-100"
-                        value={taxYearlyAmount}
-                    />
-                </Col>
-            </Row>
-            <hr></hr>
-            <Row>
-                <Col xs={12} sm={12} md={4} lg={4}>
-                    <label>Salary After Deduction</label>
-                    <InputText
-                        className="w-100"
-                        value={salaryAfterDeduction}
-                    />
-                </Col>
-            </Row>
         </div>
     )
 }
