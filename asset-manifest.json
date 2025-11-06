@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/tax-calculator/static/css/main.174833fc.css",
-    "main.js": "/tax-calculator/static/js/main.3302d16f.js",
+    "main.css": "/tax-calculator/static/css/main.5252b3c7.css",
+    "main.js": "/tax-calculator/static/js/main.0551f0e6.js",
     "static/js/453.7263cb14.chunk.js": "/tax-calculator/static/js/453.7263cb14.chunk.js",
     "static/media/InterVariable-Italic.woff2": "/tax-calculator/static/media/InterVariable-Italic.e295f70fe3e2df296c7b.woff2",
     "static/media/InterVariable.woff2": "/tax-calculator/static/media/InterVariable.a0e477f2f1f9d2376fde.woff2",
@@ -11,12 +11,12 @@
     "static/media/primeicons.ttf": "/tax-calculator/static/media/primeicons.ea5358601d0a3fd6670b.ttf",
     "static/media/primeicons.woff2": "/tax-calculator/static/media/primeicons.78172950b335ccdb94e2.woff2",
     "index.html": "/tax-calculator/index.html",
-    "main.174833fc.css.map": "/tax-calculator/static/css/main.174833fc.css.map",
-    "main.3302d16f.js.map": "/tax-calculator/static/js/main.3302d16f.js.map",
+    "main.5252b3c7.css.map": "/tax-calculator/static/css/main.5252b3c7.css.map",
+    "main.0551f0e6.js.map": "/tax-calculator/static/js/main.0551f0e6.js.map",
     "453.7263cb14.chunk.js.map": "/tax-calculator/static/js/453.7263cb14.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.174833fc.css",
-    "static/js/main.3302d16f.js"
+    "static/css/main.5252b3c7.css",
+    "static/js/main.0551f0e6.js"
   ]
 }
