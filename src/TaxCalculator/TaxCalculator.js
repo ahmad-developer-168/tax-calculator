@@ -174,6 +174,7 @@ const TaxCalculator = () => {
                                         setSalary(parsed);
                                         setSalaryMsg(false);
                                     }}
+                                    disabled={providentFund && salary}
                                     placeholder="Enter your salary"
                                 />
                                 { salaryMsg === true ?
@@ -203,6 +204,7 @@ const TaxCalculator = () => {
                                         const parsed = parseNumber(v);
                                         setProvidentFund(parsed);
                                     }}
+                                    disabled={providentFund && salary}
                                     placeholder="Calculated or enter manually"
                                 />
                             </div>
@@ -213,6 +215,7 @@ const TaxCalculator = () => {
                                 <InputText
                                     className="w-100"
                                     value={formatNumber(taxMonthlyAmount)}
+                                    disabled={providentFund && salary}
                                     placeholder="Auto-calculated"
                                 />
                             </div>
@@ -223,6 +226,7 @@ const TaxCalculator = () => {
                                 <InputText
                                     className="w-100"
                                     value={formatNumber(taxYearlyAmount)}
+                                    disabled={providentFund && salary}
                                     placeholder="Auto-calculated"
                                 />
                             </div>
@@ -238,11 +242,12 @@ const TaxCalculator = () => {
                                 <InputText
                                     className="w-100"
                                     value={formatNumber(salaryAfterDeduction)}
+                                    disabled={providentFund && salary}
                                     placeholder="Auto-calculated"
                                 />
                             </div>
                         </Col>
-                        <Col xs={12} sm={12} md={6} lg={6}>
+                        <Col xs={12} sm={12} md={6} lg={6} className="d-flex justify-content-center">
                             <div className="tc-stat">
                                 <i className="pi pi-info-circle" style={{color:'#34d399'}}></i>
                                 <span className="tc-note">EOBI fixed at 370. PF and tax calculated per existing slabs.</span>
