@@ -11,6 +11,17 @@
     --danger:#ef4444;
 }
 
+[data-theme="light"]{
+    --bg-start:#f8fafc;
+    --bg-end:#eef2ff;
+    --card-bg:rgba(255,255,255,0.8);
+    --glass:#ffffffcc;
+    --accent:#06b6d4;
+    --accent-2:#6366f1;
+    --text:#0f172a;
+    --muted:#334155;
+}
+
 .App{
     min-height:100vh;
     background: radial-gradient(1000px 600px at 10% 10%, rgba(34,211,238,0.12), transparent 60%),
@@ -34,6 +45,23 @@
     border-radius:16px;
     padding:28px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+.theme-toggle{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:var(--text);
+}
+
+.theme-toggle button{
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    border: none;
+    color:#0b1020;
+    font-weight:700;
+    padding:8px 12px;
+    border-radius:10px;
+    cursor:pointer;
 }
 
 .tc-header{
@@ -123,7 +151,17 @@
     color: var(--text) !important;
     border-radius:10px !important;
 }
+[data-theme="light"] .p-inputtext{
+    background: #ffffff !important;
+    border:1px solid rgba(0,0,0,0.08) !important;
+}
 .p-inputtext:focus{
     border-color: rgba(129,140,248,0.65) !important;
     box-shadow: 0 0 0 3px rgba(129,140,248,0.2) !important;
+}
+
+@media (max-width: 576px){
+    .App{ padding:16px; }
+    .tc-card{ padding:18px; }
+    .tc-actions{ gap:8px; }
 }

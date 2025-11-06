@@ -1,5 +1,5 @@
 import {InputText} from "primereact/inputtext";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Col, Row} from "react-bootstrap";
 import {Button} from "primereact/button";
 
@@ -11,6 +11,39 @@ const TaxCalculator = () => {
     const [providentFund, setProvidentFund] = useState("");
     const [salaryAfterDeduction, setSalaryAfterDeduction] = useState("");
     const  eobi = 370;
+
+    const numberFormatter = new Intl.NumberFormat();
+    const formatNumber = (value) => {
+        if (value === "" || value === null || value === undefined) return "";
+        const n = Number((""+value).toString().replace(/,/g, ""));
+        if (isNaN(n)) return "";
+        return numberFormatter.format(n);
+    }
+    const parseNumber = (value) => {
+        if (value === "" || value === null || value === undefined) return "";
+        const cleaned = (""+value).replace(/,/g, "");
+        const n = Number(cleaned);
+        return isNaN(n) ? "" : n;
+    }
+
+    useEffect(() => {
+        const saved = JSON.parse(localStorage.getItem("tc-state") || "{}");
+        if (saved.salary !== undefined) setSalary(saved.salary);
+        if (saved.providentFund !== undefined) setProvidentFund(saved.providentFund);
+        if (saved.taxMonthlyAmount !== undefined) setTaxMonthlyAmount(saved.taxMonthlyAmount);
+        if (saved.taxYearlyAmount !== undefined) setTaxYearlyAmount(saved.taxYearlyAmount);
+        if (saved.salaryAfterDeduction !== undefined) setSalaryAfterDeduction(saved.salaryAfterDeduction);
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("tc-state", JSON.stringify({
+            salary,
+            providentFund,
+            taxMonthlyAmount,
+            taxYearlyAmount,
+            salaryAfterDeduction
+        }));
+    }, [salary, providentFund, taxMonthlyAmount, taxYearlyAmount, salaryAfterDeduction]);
 
     const handleReset = () => {
         setSalary("");
@@ -26,7 +59,8 @@ const TaxCalculator = () => {
             setSalaryMsg(true);
         }
         else if (providentFund !== "" && salary === "") {
-            const calProvdntFund= providentFund * 20
+            const provFundNum = parseNumber(providentFund);
+            const calProvdntFund= provFundNum * 20
             const finalProvdntFund = calProvdntFund / 0.6667;
             const remainder = finalProvdntFund % 1000;
 
@@ -42,8 +76,9 @@ const TaxCalculator = () => {
         }
         else if (salary !== "" && providentFund === "") {
             setSalaryMsg(false);
-            const yearlySalary = salary * 12;
-            const calculateProvdntFnd = salary * .6667;
+            const salaryNum = parseNumber(salary);
+            const yearlySalary = salaryNum * 12;
+            const calculateProvdntFnd = salaryNum * .6667;
             const calculatedProvdntFnd = calculateProvdntFnd * 0.05;
             const decimalPart = calculatedProvdntFnd - Math.floor(calculatedProvdntFnd);
             let roundedProvdntFnd;
@@ -64,7 +99,7 @@ const TaxCalculator = () => {
                 const finalTax = taxDeduction / 12;
                 setTaxMonthlyAmount(finalTax);
                 setTaxYearlyAmount(taxDeduction);
-                const salaryAfterTaxDeduction = salary - roundedProvdntFnd - finalTax - eobi;
+                const salaryAfterTaxDeduction = salaryNum - roundedProvdntFnd - finalTax - eobi;
                 setSalaryAfterDeduction(salaryAfterTaxDeduction);
             }
             else if (yearlySalary > 1200000 && yearlySalary <= 2200000) {
@@ -73,7 +108,7 @@ const TaxCalculator = () => {
                 const finalTax = taxDeduction / 12;
                 setTaxMonthlyAmount(finalTax);
                 setTaxYearlyAmount(taxDeduction);
-                const salaryAfterTaxDeduction = salary - roundedProvdntFnd - finalTax - eobi;
+                const salaryAfterTaxDeduction = salaryNum - roundedProvdntFnd - finalTax - eobi;
                 setSalaryAfterDeduction(salaryAfterTaxDeduction);
             }
             else if (yearlySalary > 2200000 && yearlySalary <= 3200000) {
@@ -82,7 +117,7 @@ const TaxCalculator = () => {
                 const finalTax = taxDeduction / 12;
                 setTaxMonthlyAmount(finalTax);
                 setTaxYearlyAmount(taxDeduction);
-                const salaryAfterTaxDeduction = salary - roundedProvdntFnd - finalTax - eobi;
+                const salaryAfterTaxDeduction = salaryNum - roundedProvdntFnd - finalTax - eobi;
                 setSalaryAfterDeduction(salaryAfterTaxDeduction);
             }
             else if (yearlySalary > 3200000 && yearlySalary <= 4100000) {
@@ -91,7 +126,7 @@ const TaxCalculator = () => {
                 const finalTax = taxDeduction / 12;
                 setTaxMonthlyAmount(finalTax);
                 setTaxYearlyAmount(taxDeduction);
-                const salaryAfterTaxDeduction = salary - roundedProvdntFnd - finalTax - eobi;
+                const salaryAfterTaxDeduction = salaryNum - roundedProvdntFnd - finalTax - eobi;
                 setSalaryAfterDeduction(salaryAfterTaxDeduction);
             }
             else if (yearlySalary > 4100000) {
@@ -100,7 +135,7 @@ const TaxCalculator = () => {
                 const finalTax = taxDeduction / 12;
                 setTaxMonthlyAmount(finalTax);
                 setTaxYearlyAmount(taxDeduction);
-                const salaryAfterTaxDeduction = salary - roundedProvdntFnd - finalTax - eobi;
+                const salaryAfterTaxDeduction = salaryNum - roundedProvdntFnd - finalTax - eobi;
                 setSalaryAfterDeduction(salaryAfterTaxDeduction);
             }
         }
@@ -114,6 +149,16 @@ const TaxCalculator = () => {
                         <div className="tc-title"><i className="pi pi-calculator" style={{marginRight:8,color:'#22d3ee'}}></i>Income Tax & Provident Fund</div>
                         <div className="tc-sub">Modern, clean and accurate — logic unchanged</div>
                     </div>
+                    <div className="theme-toggle">
+                        <span className="tc-sub">Theme</span>
+                        <button onClick={() => {
+                            const current = document.documentElement.getAttribute('data-theme') || 'dark';
+                            const next = current === 'light' ? 'dark' : 'light';
+                            document.documentElement.setAttribute('data-theme', next);
+                        }}>
+                            <i className="pi pi-sun" style={{marginRight:6}}></i>Toggle
+                        </button>
+                    </div>
                 </div>
 
                 <div className="tc-grid">
@@ -123,9 +168,11 @@ const TaxCalculator = () => {
                                 <label>Monthly Salary</label>
                                 <InputText
                                     className="w-100"
-                                    value={salary}
+                                    value={formatNumber(salary)}
                                     onChange={(e) => {
-                                        setSalary(e.target.value);
+                                        const v = e.target.value;
+                                        const parsed = parseNumber(v);
+                                        setSalary(parsed);
                                         setSalaryMsg(false);
                                     }}
                                     placeholder="Enter your salary"
@@ -151,9 +198,11 @@ const TaxCalculator = () => {
                                 <label>Provident Fund Deduction</label>
                                 <InputText
                                     className="w-100"
-                                    value={providentFund}
+                                    value={formatNumber(providentFund)}
                                     onChange={(e) => {
-                                        setProvidentFund(e.target.value);
+                                        const v = e.target.value;
+                                        const parsed = parseNumber(v);
+                                        setProvidentFund(parsed);
                                     }}
                                     placeholder="Calculated or enter manually"
                                 />
@@ -164,7 +213,7 @@ const TaxCalculator = () => {
                                 <label>Monthly Tax Deduction</label>
                                 <InputText
                                     className="w-100"
-                                    value={taxMonthlyAmount}
+                                    value={formatNumber(taxMonthlyAmount)}
                                     placeholder="Auto-calculated"
                                 />
                             </div>
@@ -174,7 +223,7 @@ const TaxCalculator = () => {
                                 <label>Yearly Tax Deduction</label>
                                 <InputText
                                     className="w-100"
-                                    value={taxYearlyAmount}
+                                    value={formatNumber(taxYearlyAmount)}
                                     placeholder="Auto-calculated"
                                 />
                             </div>
@@ -189,7 +238,7 @@ const TaxCalculator = () => {
                                 <label>Salary After Deduction</label>
                                 <InputText
                                     className="w-100"
-                                    value={salaryAfterDeduction}
+                                    value={formatNumber(salaryAfterDeduction)}
                                     placeholder="Auto-calculated"
                                 />
                             </div>
